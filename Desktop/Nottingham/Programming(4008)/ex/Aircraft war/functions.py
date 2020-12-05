@@ -18,8 +18,12 @@ def respond_keydown_events(event, setting, screen, rocket, bullets):
         rocket.moving_left = True
     elif event.key == pygame.K_UP:
         rocket.moving_up = True
+        rocket.heading_up = True
+        rocket.heading_down = False
     elif event.key == pygame.K_DOWN:
         rocket.moving_down = True
+        rocket.heading_up = False
+        rocket.heading_down = True
     elif event.key == pygame.K_SPACE:
         fire_bullet(setting, screen, rocket, bullets)
     elif event.key == pygame.K_q:
@@ -63,10 +67,10 @@ def screen_update(setting, screen, states, scoreboard, rocket, aliens, bullets, 
 
 # Update bullets. 
 def update_bullets(setting, screen, states, scoreboard, rocket, aliens, bullets):
-    bullets.update()
+    bullets.update(rocket)
     # Delete missing bullets
     for bullet in bullets.copy():
-        if bullet.rect.bottom <= 0:
+        if bullet.rect.bottom <= 0 or bullet.rect.bottom >= rocket.screen_rect.bottom:
             bullets.remove(bullet)
     check_bullet_alien_collisions(setting, screen, states, scoreboard, rocket, aliens, bullets)
 
@@ -99,7 +103,7 @@ def create_alien(setting, screen, aliens, alien_number, row_number):
     alien_width = alien.rect.width
     alien.x = alien_width + 2 * alien_width * alien_number
     alien.rect.x = alien.x
-    alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+    alien.rect.y = alien.rect.height + 10 * alien.rect.height * row_number
     aliens.add(alien)
 
 # Create aliens. 
@@ -109,7 +113,7 @@ def create_aliens(setting, screen, rocket, aliens):
 
     number_rows = alien.row_number
     for row_number in range(number_rows):
-        for alien_number in range(number_aliens_x): 
+        for alien_number in range(number_aliens_x):
             create_alien(setting, screen, aliens, alien_number, row_number)
 
 # Check aliens edge. 
@@ -122,7 +126,10 @@ def check_aliens_edge(setting, aliens):
 # Change aliens direction. 
 def change_aliens_direction(setting, aliens):
     for alien in aliens.sprites():
-        alien.rect.y += setting.aliens_drop_speed
+        if alien.rect.y <= setting.screen_height / 2:
+            alien.rect.y += setting.aliens_drop_speed
+        else:
+            alien.rect.y -= setting.aliens_drop_speed
     setting.aliens_direction *= -1
 
 # Update aliens. 
@@ -131,7 +138,7 @@ def update_aliens(setting, screen, states, scoreboard, rocket, aliens, bullets):
     aliens.update()
     if pygame.sprite.spritecollideany(rocket, aliens):
         rocket_hit(setting, screen, states, scoreboard, rocket, aliens, bullets)
-    check_alien_bottom(setting, states, screen, rocket, aliens, bullets)
+    check_alien_bottom(setting, screen, states, scoreboard, rocket, aliens, bullets)
     
 # Rocket hit. 
 def rocket_hit(setting, screen, states, scoreboard, rocket, aliens, bullets):
@@ -152,11 +159,12 @@ def rocket_hit(setting, screen, states, scoreboard, rocket, aliens, bullets):
         pygame.mouse.set_visible(True)
 
 # Check alien bottom. 
-def check_alien_bottom(setting, states, screen, rocket, aliens, bullets):
-    screen_rect = screen.get_rect()
+def check_alien_bottom(setting, screen, states, scoreboard, rocket, aliens, bullets):
+    # screen_rect = screen.get_rect()
     for alien in aliens.sprites():
-        if alien.rect.bottom >= screen_rect.bottom:
-            rocket_hit(setting, states, screen, rocket, aliens, bullets)
+        if alien.rect.y == setting.screen_height / 2:
+        # if alien.rect.bottom >= screen_rect.bottom:
+            rocket_hit(setting, screen, states, scoreboard, rocket, aliens, bullets)
             break
         
 # Check play button. 

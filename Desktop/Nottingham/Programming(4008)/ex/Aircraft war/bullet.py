@@ -15,9 +15,14 @@ class Bullet(Sprite):
         super().__init__()
         self.screen = screen
         
-        self.rect = pygame.Rect(0,0,setting.bullet_width,setting.bullet_height)
-        self.rect.centerx = rocket.rect.centerx
-        self.rect.top = rocket.rect.top
+        if rocket.heading_up:
+            self.rect = pygame.Rect(0,0,setting.bullet_width,setting.bullet_height)
+            self.rect.centerx = rocket.rect.centerx
+            self.rect.top = rocket.rect.top
+        elif rocket.heading_down:
+            self.rect = pygame.Rect(0,0,setting.bullet_width,setting.bullet_height)
+            self.rect.centerx = rocket.rect.centerx
+            self.rect.top = rocket.rect.bottom
         
         self.bullet_y = float(self.rect.y)
         
@@ -25,8 +30,11 @@ class Bullet(Sprite):
         self.speed = setting.bullet_speed
     
     # Update bullet position. 
-    def update(self):
-        self.bullet_y -= self.speed
+    def update(self, rocket):
+        if rocket.heading_up:
+            self.bullet_y -= self.speed
+        elif rocket.heading_down:
+            self.bullet_y += self.speed
         self.rect.y = self.bullet_y
     
     # Draw bullet. 

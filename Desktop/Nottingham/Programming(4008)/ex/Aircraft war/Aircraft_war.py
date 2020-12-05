@@ -48,7 +48,7 @@ def game_run():
         functions.respond_events(setting, screen, states, scoreboard, rocket, aliens, bullets, play_button)
         if states.game_active:
             rocket.update_rocket()
-            bullets.update()
+            bullets.update(rocket)
             functions.update_bullets(setting, screen, states, scoreboard, rocket, aliens, bullets)
             functions.update_aliens(setting, screen, states, scoreboard, rocket, aliens, bullets)
         functions.screen_update(setting, screen, states, scoreboard, rocket, aliens, bullets, play_button)
