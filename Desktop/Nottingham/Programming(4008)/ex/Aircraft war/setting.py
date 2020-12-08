@@ -31,3 +31,9 @@ class Setting():
         self.aliens_drop_speed = 5
         self.aliens_direction = 1
         self.alien_points = 50
+        
+        # Alien Bullet setting. 
+        self.alien_bullet_speed = 0.1
+        self.alien_bullet_width = 3
+        self.alien_bullet_height = 10
+        self.alien_bullet_color = (40,40,40)

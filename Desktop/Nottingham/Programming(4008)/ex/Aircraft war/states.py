@@ -11,8 +11,11 @@ class States():
         self.setting = setting
         self.reset_states()
         self.game_active = False
+        self.textbox_show = False
+        self.create_incident = False
+        self.incident_show = False
+        self.highest_score = 0
     
     def reset_states(self):
         self.rocket_left = self.setting.rocket_lives
         self.score = 0
-        self.highest_score = 0

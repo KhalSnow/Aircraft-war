@@ -31,7 +31,6 @@ class Rocket(Sprite):
         # Put the rocket at the mid bottom of screen. 
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.centery
-        # self.rect.bottom = self.screen_rect.bottom
         
         # Store decimal. 
         self.center_x = float(self.rect.centerx)
