@@ -13,7 +13,6 @@ class Setting():
         # Screen setting. 
         self.screen_width = 1200
         self.screen_height = 800
-        self.background_color = (230,230,230)
         
         # Rocket setting. 
         self.rocket_speed = 1.5
@@ -23,7 +22,7 @@ class Setting():
         self.bullet_speed = 1
         self.bullet_width = 3
         self.bullet_height = 15
-        self.bullet_color = (60,60,60)
+        self.bullet_color = (255,255,255)
         self.bullets_max = 3
         
         # Alien setting. 
@@ -36,4 +35,4 @@ class Setting():
         self.alien_bullet_speed = 0.1
         self.alien_bullet_width = 3
         self.alien_bullet_height = 10
-        self.alien_bullet_color = (40,40,40)
+        self.alien_bullet_color = (255,255,0)

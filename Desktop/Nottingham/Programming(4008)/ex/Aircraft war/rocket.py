@@ -42,7 +42,8 @@ class Rocket(Sprite):
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-    
+        
+    # Update the position of rocket. 
     def update_rocket(self):
         if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center_x += self.setting.rocket_speed

@@ -10,6 +10,7 @@ from pygame.sprite import Sprite
 
 class Alien(Sprite):
     
+    # Initialize Alien.
     def __init__(self, setting, screen):
         super().__init__()
         self.screen = screen
@@ -24,14 +25,17 @@ class Alien(Sprite):
         self.x_alien = float(self.rect.x)
         
         self.row_number = 2
-    
+
+    # Create surface to display alien on the screen
     def blit(self):
         self.screen.blit(self.image, self.rect)
-    
+
+    # Update alien position.
     def update(self):
         self.x += (self.setting.alien_speed * self.setting.aliens_direction)
         self.rect.x = self.x
-        
+    
+    # Check if alien touch right or left side of the screen.
     def check_edge(self):
         screen_rect = self.screen.get_rect()
         if self.rect.right >= screen_rect.right:

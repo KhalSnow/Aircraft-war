@@ -10,20 +10,19 @@ from pygame.sprite import Sprite
 
 class Alien_Bullet(Sprite):
     
-    # Initialize bullet. 
-    def __init__(self, setting, screen, aliens, alien_bullets):
+    # Initialize alien bullet. 
+    def __init__(self, setting, screen, alien, alien_bullets):
         super().__init__()
         self.screen = screen
         
         self.rect = pygame.Rect(0,0,setting.alien_bullet_width,setting.alien_bullet_height)
         
-        for alien in aliens.sprites():
-            if alien.rect.y < setting.screen_height / 2:
-                self.rect.centerx = alien.rect.centerx
-                self.rect.bottom = alien.rect.bottom
-            else:
-                self.rect.centerx = alien.rect.centerx
-                self.rect.bottom = alien.rect.top
+        if alien.rect.y < setting.screen_height / 2:
+            self.rect.centerx = alien.rect.centerx
+            self.rect.bottom = alien.rect.bottom
+        else:
+            self.rect.centerx = alien.rect.centerx
+            self.rect.bottom = alien.rect.top
         
         self.alien_bullet_y = float(self.rect.y)
         

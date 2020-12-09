@@ -12,12 +12,19 @@ from rocket import Rocket
 from button import Button
 from scoreboard import Scoreboard
 from textbox import Textbox
-from incidents import Incidents
+from background import Background
 import functions
 from pygame.sprite import Group
 
 # Start main loop. 
 def game_run():
+    file = r'activation.mp3'  
+    # Initialize
+    pygame.mixer.init()  
+    # Load the file pf music
+    pygame.mixer.music.load(file)  
+    pygame.mixer.music.play()
+    
     # Initialize and create screen. 
     pygame.init()
     setting = Setting()
@@ -55,6 +62,9 @@ def game_run():
     # Create Incidents. 
     incidents = Group()
     
+    # Create Background. 
+    BackGround = Background('background.jpg', [0,0])
+    
     # Main loop. 
     while True:
         functions.respond_events(setting, screen, states, scoreboard, rocket, aliens, bullets, alien_bullets, play_button, help_button, textbox, incidents)
@@ -68,6 +78,7 @@ def game_run():
             functions.update_alien_bullets(setting, screen, states, scoreboard, rocket, aliens, bullets, alien_bullets, incidents)
             functions.update_incidents(setting, screen, states, scoreboard, rocket, aliens, bullets, alien_bullets, incidents)
         functions.screen_update(setting, screen, states, scoreboard, rocket, aliens, bullets, alien_bullets, play_button, help_button, textbox, incidents)
-
+        screen.fill([255,255,255])
+        screen.blit(BackGround.image, BackGround.rect)
 
 game_run()

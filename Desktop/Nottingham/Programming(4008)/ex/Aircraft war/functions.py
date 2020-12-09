@@ -61,7 +61,6 @@ def respond_events(setting, screen, states, scoreboard, rocket, aliens, bullets,
 
 # Update screen. 
 def screen_update(setting, screen, states, scoreboard, rocket, aliens, bullets, alien_bullets, play_button, help_button, textbox, incidents):
-    screen.fill(setting.background_color)
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     rocket.blit()
@@ -86,7 +85,7 @@ def screen_update(setting, screen, states, scoreboard, rocket, aliens, bullets, 
 # Update bullets. 
 def update_bullets(setting, screen, states, scoreboard, rocket, aliens, bullets, alien_bullets):
     bullets.update(rocket)
-    # Delete missing bullets
+    # Delete missing bullets. 
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0 or bullet.rect.bottom >= rocket.screen_rect.bottom:
             bullets.remove(bullet)
@@ -107,6 +106,7 @@ def check_bullet_alien_collisions(setting, screen, states, scoreboard, rocket, a
 # Update alien bullets. 
 def update_alien_bullets(setting, screen, states, scoreboard, rocket, aliens, bullets, alien_bullets, incidents):
     alien_bullets.update(setting)
+    # Delete missing alien bullets. 
     for alien_bullet in alien_bullets.copy():
         if alien_bullet.rect.bottom >= setting.screen_height / 2 and alien_bullet.rect.bottom <= setting.screen_height / 2 + setting.alien_bullet_height:
             alien_bullets.remove(alien_bullet)
@@ -136,9 +136,10 @@ def check_alien_bullet_rocket_collisions(setting, screen, states, scoreboard, ro
 
 # Fire alien bullet. 
 def fire_alien_bullet(setting, screen, aliens, alien_bullets):
-    new_alien_bullet = Alien_Bullet(setting, screen, aliens, alien_bullets)
+    for alien in aliens:
+        new_alien_bullet = Alien_Bullet(setting, screen, alien, alien_bullets)
     alien_bullets.add(new_alien_bullet)
-
+    
 # Fire bullets. 
 def fire_bullet(setting, screen, rocket, bullets):
     if len(bullets) < setting.bullets_max:
@@ -170,12 +171,6 @@ def create_aliens(setting, screen, rocket, aliens, alien_bullets):
             create_alien(setting, screen, aliens, alien_number, row_number)
             if random.randint(0,1):
                 fire_alien_bullet(setting, screen, aliens, alien_bullets)
-            
-# Create alien and alien_bullets. 
-def create_alien_bullets(setting, screen, rocket, aliens, alien_bullets):
-    for alien in aliens.sprites():
-        if random.randint(0,1):
-            fire_alien_bullet(setting, screen, aliens, alien_bullets)
         
 # Check aliens edge. 
 def check_aliens_edge(setting, screen, rocket, aliens, alien_bullets):
@@ -191,8 +186,6 @@ def change_aliens_direction(setting, screen, rocket, aliens, alien_bullets):
             alien.rect.y += setting.aliens_drop_speed
         else:
             alien.rect.y -= setting.aliens_drop_speed
-    if alien.rect.y == setting.screen_height / 4 or alien.rect.y == setting.screen_height * 3 / 4:
-        create_alien_bullets(setting, screen, rocket, aliens, alien_bullets)
     setting.aliens_direction *= -1
 
 # Update aliens. 
@@ -290,3 +283,4 @@ def update_incidents(setting, screen, states, scoreboard, rocket, aliens, bullet
             states.incident_show = False
             incidents.empty()
             scoreboard.prep_rockets()
+

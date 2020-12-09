@@ -9,6 +9,7 @@ import pygame.font
 
 class Textbox():
     
+    # Initialize textbox and its position. 
     def __init__(self, setting, screen):
         self.screen = screen
         self.screen_rect = screen.get_rect()
@@ -23,6 +24,7 @@ class Textbox():
         
         self.show_textbox()
         
+    # Show textbox. 
     def show_textbox(self):
         textbox_str = "Press q to quit. Press space to fire bullet. Press w to go up. Press s to go down. Press a to go left. Press d to go right. "
         self.background_color = (0,255,255)
@@ -30,5 +32,6 @@ class Textbox():
         self.textbox_image_rect = self.textbox_image.get_rect()
         self.textbox_image_rect.center = self.rect.center
         
+    # Draw textbox.
     def draw_textbox(self):
         self.screen.blit(self.textbox_image, self.rect)

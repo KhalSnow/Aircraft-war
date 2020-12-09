@@ -11,6 +11,7 @@ import random
 
 class Incidents(Sprite):
     
+    # Initialize Incidents.
     def __init__(self, setting, screen):
         super().__init__()
         self.screen = screen
@@ -28,22 +29,23 @@ class Incidents(Sprite):
         
         self.incident_x = float(self.rect.x)
         self.incident_y = float(self.rect.y)
-        
+    
+    # Update the position of incidents.
     def update(self, states):
         self.incident_x += random.randint(-1,1) * self.speed
         self.rect.x = self.incident_x
         self.incident_y += random.randint(-1,1) * self.speed
         self.rect.y = self.incident_y
     
+    # Get image.
     def get_image(self):
         rand = random.randint(1,2)
         if rand == 1:
             self.image = self.image_boom
-        # elif rand == 2:
-        #     self.image = self
-        else:
+        elif rand == 2:
             self.image = self.image_life_up
         return self.image, rand
     
+    # Draw the incidents at certain position.
     def blit(self):
         self.screen.blit(self.image, self.rect)

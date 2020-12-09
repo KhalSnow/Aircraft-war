@@ -9,6 +9,7 @@ import pygame.font
 
 class Button():
     
+    # Initialize button.
     def __init__(self, setting, screen, msg, centery):
         self.screen = screen
         self.screen_rect = screen.get_rect()
@@ -23,12 +24,14 @@ class Button():
         self.rect.centery = centery
         
         self.prep_msg(msg)
-    
+        
+    # Set the position and font of the button.
     def prep_msg(self, msg):
         self.msg_image = self.font.render(msg, True, self.text_color, self.button_color)
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
         
+    # Draw Button.
     def draw_button(self):
         self.screen.fill(self.button_color, self.rect)
         self.screen.blit(self.msg_image, self.msg_image_rect)
