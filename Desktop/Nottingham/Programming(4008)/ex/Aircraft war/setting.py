@@ -27,7 +27,7 @@ class Setting():
         
         # Alien setting. 
         self.alien_speed = 0.5
-        self.aliens_drop_speed = 5
+        self.aliens_drop_speed = 10
         self.aliens_direction = 1
         self.alien_points = 50
         
